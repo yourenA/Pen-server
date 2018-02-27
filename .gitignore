@@ -1,0 +1,14 @@
+# gitignore
+.idea
+*.iml
+out
+gen
+
+#log
+*.log
+
+#node_modules
+node_modules
+
+assets/images/*
+
