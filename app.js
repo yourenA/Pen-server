@@ -32,13 +32,14 @@ app.use(session({
     saveUninitialized: true                // 无论有没有session cookie，每次请求都设置个session cookie
 }));
 
-var whitelist = ['http://localhost:8000', 'http://localhost:3001', 'http://http://127.0.0.1:1880']
+var whitelist = ['http://localhost:8000', 'http://localhost:3001', 'http://127.0.0.1:3005']
 var corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true)
         } else {
-            callback(new Error('Not allowed by CORS'))
+            // callback(new Error('Not allowed by CORS'))
+            callback(null, true)
         }
     },
     credentials:true
