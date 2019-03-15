@@ -20,18 +20,16 @@ exports.getCategory = function (req, res, next) {
     if(returnType==='all'){
         condition={
             order: [
-                ['createdAt', 'DESC'],
+                ['id', 'ASC'],
             ],
             where: where
         }
     }else{
         condition={
             order: [
-                ['createdAt', 'DESC'],
+                ['id', 'ASC'],
             ],
-                where: where,
-            offset: 12 * (page - 1),// 跳过多少条
-            limit: 12 // 每页多少条
+            where: where,
         }
     }
     dbModels.code_category.findAndCountAll(
@@ -60,6 +58,10 @@ exports.addCategory = function (req, res, next) {
     }
     dbModels.code_category.create({
         name: req.body.name,
+        r: req.body.r,
+        g: req.body.g,
+        b: req.body.b,
+        a: req.body.a
     }).then(function (user) {
         res.status(200).json(user)
     });

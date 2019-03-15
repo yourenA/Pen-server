@@ -10,6 +10,7 @@ var api = require('./routes/api');
 var session = require('express-session');
 var cors = require('cors')
 var app = express();
+var login_mid = require('./mids/login_mid.js');
 app.set('port', (process.env.PORT || 3000));//set设置端口
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,8 +29,8 @@ app.use(session({
     secret: 'demo_test',
     name: 'mydemo',                         //这里的name值得是cookie的name，默认cookie的name是：connect.sid
     cookie: {maxAge: 30 * 60 * 1000},    //设置maxAge是30分钟，即30分钟后session和相应的cookie失效过期
-    resave: false,                         // 每次请求都重新设置session cookie
-    saveUninitialized: true                // 无论有没有session cookie，每次请求都设置个session cookie
+    resave: true,                         // 每次请求都重新设置session cookie
+    saveUninitialized: false                // 无论有没有session cookie，每次请求都设置个session cookie
 }));
 
 var whitelist = ['http://localhost:8000', 'http://localhost:3001', 'http://127.0.0.1:3005']
@@ -58,6 +59,7 @@ app.use(cors(corsOptions))
 // });
 var db = require('./models/index');
 var connection = db.connection;
+app.use(login_mid());
 app.use('/', routes);
 app.use('/api', api);
 

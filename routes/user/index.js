@@ -17,7 +17,6 @@ exports.login = function (req, res, next) {
     }).then(function (user) {
         if (user) {
             req.session.user = user.username;
-            console.log('req.session.user',req.session.user)
             res.status(200).json({
                 username: user.username
             })
@@ -27,6 +26,36 @@ exports.login = function (req, res, next) {
             })
         }
     });
+};
+exports.changePassword = function (req, res, next) {
+    if(!req.body.old_password){
+        res.status(402).json({
+            message: '请输入旧密码'
+        })
+    }
+    if(!req.body.new_password ){
+        res.status(402).json({
+            message: '请输入新密码'
+        })
+    }
+    if(req.body.new_password !== req.body.new_password_confirmation){
+        res.status(402).json({
+            message: '两次输入的密码不相同'
+        })
+    }
+    dbModels.user.update(
+        {
+            password: md5(req.body.new_password)
+        },
+        {
+            where: {username: username}
+        }
+    ).then(function () {
+        res.status(200).json({
+            message: '修改密码成功'
+        })
+    })
+
 };
 
 exports.logout = function (req, res, next) {

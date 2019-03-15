@@ -62,6 +62,7 @@ var category=require('./category/index')
 var checkLogin=require('./../util/index').checkLogin;
 
 router.post('/login',user.login );
+router.post('/password',user.changePassword );
 router.post('/logout',user.logout );
 
 router.get('/words',word.getWords );
@@ -85,7 +86,9 @@ router.delete('/category/:id',category.deleteCategory );
 
 router.post('/markdown/upload',markdownUpload.single('image'),code.uploadMarkdownImage );
 router.get('/code',code.getCode );
+router.get('/code/:id',code.getOneCode );
 router.post('/code',code.addCode );
+router.put('/code/:id',code.editCode );
 router.delete('/code/:id',code.deleteCode );
 
 

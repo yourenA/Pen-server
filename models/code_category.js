@@ -1,7 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var code_category = sequelize.define('code_category', {
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    r: DataTypes.INTEGER,
+    g: DataTypes.INTEGER,
+    b: DataTypes.INTEGER,
+    a: DataTypes.FLOAT
   }, {
     timestamps: true,
     // 不从数据库中删除数据，而只是增加一个 deletedAt 标识当前时间
