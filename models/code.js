@@ -12,6 +12,8 @@ module.exports = function (sequelize, DataTypes) {
             associate: function (models) {
                 code.belongsTo(models['code_category']);
                 code.belongsToMany(models['tag'], {through: 'tagcode'})
+                code.hasMany(models['comment'])
+
             }
         }
     });

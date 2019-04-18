@@ -59,6 +59,7 @@ var photo=require('./photo/index')
 var code=require('./code/index')
 var tags=require('./tags/index')
 var category=require('./category/index')
+var getCaptcha=require('./../util/index').getCaptcha
 var checkLogin=require('./../util/index').checkLogin;
 
 router.post('/login',user.login );
@@ -87,9 +88,11 @@ router.delete('/category/:id',category.deleteCategory );
 router.post('/markdown/upload',markdownUpload.single('image'),code.uploadMarkdownImage );
 router.get('/code',code.getCode );
 router.get('/code/:id',code.getOneCode );
-router.post('/code',code.addCode );
-router.put('/code/:id',code.editCode );
-router.delete('/code/:id',code.deleteCode );
+router.post('/code',checkLogin,code.addCode );
+router.put('/code/:id',checkLogin,code.editCode );
+router.delete('/code/:id',checkLogin,code.deleteCode );
+router.post('/comment',code.addComment );
+router.get('/comments',code.getComment );
 
-
+router.get('/captcha',getCaptcha );
 module.exports = router;

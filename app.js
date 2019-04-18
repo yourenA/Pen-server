@@ -8,6 +8,7 @@ var http = require('http');
 var routes = require('./routes/index');
 var api = require('./routes/api');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var cors = require('cors')
 var app = express();
 var login_mid = require('./mids/login_mid.js');
@@ -29,8 +30,11 @@ app.use(session({
     secret: 'demo_test',
     name: 'mydemo',                         //这里的name值得是cookie的name，默认cookie的name是：connect.sid
     cookie: {maxAge: 30 * 60 * 1000},    //设置maxAge是30分钟，即30分钟后session和相应的cookie失效过期
-    resave: true,                         // 每次请求都重新设置session cookie
-    saveUninitialized: false                // 无论有没有session cookie，每次请求都设置个session cookie
+    resave: false,                         // 每次请求都重新设置session cookie
+    saveUninitialized: false,                // 无论有没有session cookie，每次请求都设置个session cookie
+    store: new MongoStore({
+        url:'mongodb://127.0.0.1:27017/voting',
+    })
 }));
 
 var whitelist = ['http://localhost:8000', 'http://localhost:3001', 'http://127.0.0.1:3005']
@@ -70,9 +74,6 @@ app.use(function (req, res, next) {
     next(err);
 });
 
-// error handlers
-
-// development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
