@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'assets')));
 app.use(session({
     secret: 'demo_test',
     name: 'mydemo',                         //这里的name值得是cookie的name，默认cookie的name是：connect.sid
-    cookie: {maxAge: 30 * 60 * 1000},    //设置maxAge是30分钟，即30分钟后session和相应的cookie失效过期
+    cookie: {maxAge: 72 * 60 * 60 * 1000},    //设置maxAge是24*60分钟，即60分钟后session和相应的cookie失效过期
     resave: false,                         // 每次请求都重新设置session cookie
     saveUninitialized: false,                // 无论有没有session cookie，每次请求都设置个session cookie
     store: new MongoStore({
