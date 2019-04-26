@@ -28,6 +28,10 @@ module.exports = {
       name:'摄影',
       createdAt: new Date(),
       updatedAt: new Date()
+    },{
+      name:'其它',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 

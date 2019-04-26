@@ -27,6 +27,7 @@ exports.getCategory = function (req, res, next) {
     }else{
         condition={
             order: [
+                ['index', 'ASC'],
                 ['id', 'ASC'],
             ],
             where: where,
@@ -51,6 +52,12 @@ exports.getCategory = function (req, res, next) {
 
 
 exports.addCategory = function (req, res, next) {
+    console.log('req.file',req.file)
+    if (!req.file) {
+        return res.status(402).json({
+            message: '必须有图标'
+        })
+    }
     if (!req.body.name) {
         return res.status(402).json({
             message: '所有字段必填'
@@ -61,7 +68,8 @@ exports.addCategory = function (req, res, next) {
         r: req.body.r,
         g: req.body.g,
         b: req.body.b,
-        a: req.body.a
+        a: req.body.a,
+        imageUrl:'/images/category/' + req.file.filename
     }).then(function (user) {
         res.status(200).json(user)
     });
@@ -97,6 +105,10 @@ exports.editCategory = function (req, res, next) {
         if (result) {
             var update = {};
             update.name = req.body.name;
+            update.index = req.body.index;
+            if(req.file){
+                update.imageUrl='/images/category/' + req.file.filename
+            }
             dbModels.code_category.update(
                 update,
                 {

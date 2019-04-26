@@ -2,6 +2,8 @@
 module.exports = function(sequelize, DataTypes) {
   var code_category = sequelize.define('code_category', {
     name: DataTypes.STRING,
+    imageUrl: DataTypes.STRING,
+    index: {type:DataTypes.INTEGER, defaultValue:1},
     r: DataTypes.INTEGER,
     g: DataTypes.INTEGER,
     b: DataTypes.INTEGER,
